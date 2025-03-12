@@ -10,15 +10,15 @@ Created with ❤️ by [Wayne Hoggett](https://github.com/WayneHoggett-ACG/)
 ## Table of Contents
 
 1. [Module 1](#module-1)
-    1. [Clip 1 - ](#)
-    1. [Clip 2 - ](#)
+    1. [Clip 1 - Maintaining Azure Kubernetes Service (AKS)](#clip-1---maintaining-azure-kubernetes-service-aks)
+    1. [Clip 2 - Demo: Automatically Upgrade Azure Kubernetes Service (AKS)](#clip-2---demo-automatically-upgrade-azure-kubernetes-service-aks)
 1. [Module 2](#module-2)
-    1. [Clip 1 - ](#)
-    1. [Clip 2 - ](#)
-    1. [Clip 3 - ](#)
-    1. [Clip 4 - ](#)
-    1. [Clip 5 - ](#)
-    1. [Clip 6 - ](#)
+    1. [Clip 1 - Monitoring Azure Kubernetes Service (AKS)](#clip-1---monitoring-azure-kubernetes-service-aks)
+    1. [Clip 2 - Demo: Configure Diagnostic Settings](#clip-2---demo-configure-diagnostic-settings)
+    1. [Clip 3 - Demo: Enable Container Insights](#clip-3---demo-enable-container-insights)
+    1. [Clip 4 - Demo: Configure Prometheus Monitoring](#clip-4---demo-configure-prometheus-monitoring)
+    1. [Clip 5 - Demo: Configure Recommended Alerts](#clip-5---demo-configure-recommended-alerts)
+    1. [Clip 6 - Demo: Configure Application Insights](#clip-6---demo-configure-application-insights)
 
 ## Module 1
 
@@ -38,7 +38,7 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 1. Log in to the Azure Sandbox using the provided credentials.
 1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
 
-    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F1.2%2Fmain.json)
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpluralsight-cloud%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F1.2%2Fmain.json)
 
 1. Select the existing **Subscription** and **Resource Group**.
 1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
@@ -66,7 +66,7 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 1. Log in to the Azure Sandbox using the provided credentials.
 1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
 
-    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.2%2Fmain.json)
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https%3A%2F%2Fraw.githubusercontent.com%2Fpluralsight-cloud%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.2%2Fmain.json)
 
 1. Select the existing **Subscription** and **Resource Group**.
 1. Deploy the template.
@@ -80,7 +80,7 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 1. Log in to the Azure Sandbox using the provided credentials.
 1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
 
-    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.3%2Fmain.json)
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpluralsight-cloud%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.3%2Fmain.json)
 
 1. Select the existing **Subscription** and **Resource Group**.
 1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
@@ -95,7 +95,7 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 1. Log in to the Azure Sandbox using the provided credentials.
 1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
 
-    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.4%2Fmain.json)
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpluralsight-cloud%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.4%2Fmain.json)
 
 1. Select the existing **Subscription** and **Resource Group**.
 1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
@@ -110,7 +110,7 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 1. Log in to the Azure Sandbox using the provided credentials.
 1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
 
-    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.5%2Fmain.json)
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https%3A%2F%2Fraw.githubusercontent.com%2Fpluralsight-cloud%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.5%2Fmain.json)
 
 1. Select the existing **Subscription** and **Resource Group**.
 1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
@@ -125,7 +125,7 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 1. Log in to the Azure Sandbox using the provided credentials.
 1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
 
-    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.2%6Fmain.json)
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpluralsight-cloud%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.6%2Fmain.json)
 
 1. Select the existing **Subscription** and **Resource Group**.
 1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
