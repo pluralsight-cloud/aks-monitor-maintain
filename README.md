@@ -1,0 +1,133 @@
+# Monitor and Maintain Azure Kubernetes Service (AKS)
+
+Created with ❤️ by [Wayne Hoggett](https://github.com/WayneHoggett-ACG/)
+
+## References
+
+- [Azure Kubernetes Service Roadmap (Public)](https://aka.ms/aks/roadmap)
+- [Azure Monitor Baseline Alerts(AMBA)](https://aka.ms/amba)
+
+## Table of Contents
+
+1. [Module 1](#module-1)
+    1. [Clip 1 - ](#)
+    1. [Clip 2 - ](#)
+1. [Module 2](#module-2)
+    1. [Clip 1 - ](#)
+    1. [Clip 2 - ](#)
+    1. [Clip 3 - ](#)
+    1. [Clip 4 - ](#)
+    1. [Clip 5 - ](#)
+    1. [Clip 6 - ](#)
+
+## Module 1
+
+### Clip 1 - Maintaining Azure Kubernetes Service (AKS)
+
+- [Kubernetes Release Versioning](https://github.com/kubernetes/sig-release/blob/master/release-engineering/versioning.md)
+- [AKS Upgrade Best Practices](https://learn.microsoft.com/azure/architecture/operator-guides/aks/aks-upgrade-practices)
+- [Azure Kubernetes Service patch and upgrade guidance](https://learn.microsoft.com/azure/architecture/operator-guides/aks/aks-upgrade-practices)
+- [Upgrading Azure Kubernetes Service clusters and node pools](https://learn.microsoft.com/azure/aks/upgrade)
+- [Supported Kubernetes versions in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/supported-kubernetes-versions)
+
+### Clip 2 - Demo: Automatically Upgrade Azure Kubernetes Service (AKS)
+
+To follow along in this demo using the Cloud Playground Sandbox, follow these steps:
+
+1. Start an Azure Sandbox.
+1. Log in to the Azure Sandbox using the provided credentials.
+1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
+
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F1.2%2Fmain.json)
+
+1. Select the existing **Subscription** and **Resource Group**.
+1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
+1. Deploy the template.
+1. Follow-along with the demo.
+
+#### Additional Learning Material
+
+**Note**: To implement some of the functionality in these additional links, you might require your own Azure subscription.
+
+- [Automatically upgrade an Azure Kubernetes Service (AKS) cluster](https://learn.microsoft.com/azure/aks/auto-upgrade-cluster)
+- [Auto-upgrade node OS images](https://learn.microsoft.com/azure/aks/auto-upgrade-node-os-image?tabs=azure-cli)
+
+## Module 2
+
+### Clip 1 - Monitoring Azure Kubernetes Service (AKS)
+
+- [Monitor Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/monitor-aks)
+
+### Clip 2 - Demo: Configure Diagnostic Settings
+
+To follow along in this demo using the Cloud Playground Sandbox, follow these steps:
+
+1. Start an Azure Sandbox.
+1. Log in to the Azure Sandbox using the provided credentials.
+1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
+
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.2%2Fmain.json)
+
+1. Select the existing **Subscription** and **Resource Group**.
+1. Deploy the template.
+1. Follow-along with the demo.
+
+### Clip 3 - Demo: Enable Container Insights
+
+To follow along in this demo using the Cloud Playground Sandbox, follow these steps:
+
+1. Start an Azure Sandbox.
+1. Log in to the Azure Sandbox using the provided credentials.
+1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
+
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.3%2Fmain.json)
+
+1. Select the existing **Subscription** and **Resource Group**.
+1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
+1. Deploy the template.
+1. Follow-along with the demo.
+
+### Clip 4 - Demo: Configure Prometheus Monitoring
+
+To follow along in this demo using the Cloud Playground Sandbox, follow these steps:
+
+1. Start an Azure Sandbox.
+1. Log in to the Azure Sandbox using the provided credentials.
+1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
+
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.4%2Fmain.json)
+
+1. Select the existing **Subscription** and **Resource Group**.
+1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
+1. Deploy the template.
+1. Follow-along with the demo.
+
+### Clip 5 - Demo: Configure Recommended Alerts
+
+To follow along in this demo using the Cloud Playground Sandbox, follow these steps:
+
+1. Start an Azure Sandbox.
+1. Log in to the Azure Sandbox using the provided credentials.
+1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
+
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.5%2Fmain.json)
+
+1. Select the existing **Subscription** and **Resource Group**.
+1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
+1. Deploy the template.
+1. Follow-along with the demo.
+
+### Clip 6 - Demo: Configure Application Insights
+
+To follow along in this demo using the Cloud Playground Sandbox, follow these steps:
+
+1. Start an Azure Sandbox.
+1. Log in to the Azure Sandbox using the provided credentials.
+1. Click the **Deploy to Azure** button. Make sure the link opens in the Sandbox browser tab.
+
+    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FWayneHoggett-ACG%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.2%6Fmain.json)
+
+1. Select the existing **Subscription** and **Resource Group**.
+1. Provide the `Application Client ID` and `Secret` from the Sandbox details.
+1. Deploy the template.
+1. Follow-along with the demo.

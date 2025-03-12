@@ -1,0 +1,117 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.33.93.31351",
+      "templateHash": "11108007230863488336"
+    }
+  },
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "osDiskSizeGB": {
+      "type": "int",
+      "defaultValue": 128
+    },
+    "agentCount": {
+      "type": "int",
+      "defaultValue": 1
+    },
+    "agentVMSize": {
+      "type": "string",
+      "defaultValue": "Standard_D2s_v3"
+    },
+    "osTypeLinux": {
+      "type": "string",
+      "defaultValue": "Linux"
+    },
+    "kubernetesVersion": {
+      "type": "string"
+    },
+    "enableMaintenanceConfigurations": {
+      "type": "bool",
+      "defaultValue": false
+    }
+  },
+  "variables": {
+    "uniqueSuffix": "[uniqueString(resourceGroup().id)]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.ContainerService/managedClusters",
+      "apiVersion": "2024-06-02-preview",
+      "name": "[format('aks-{0}', variables('uniqueSuffix'))]",
+      "location": "[parameters('location')]",
+      "tags": {
+        "displayname": "AKS Cluster"
+      },
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "properties": {
+        "enableRBAC": true,
+        "dnsPrefix": "[format('aks-{0}', variables('uniqueSuffix'))]",
+        "kubernetesVersion": "[parameters('kubernetesVersion')]",
+        "agentPoolProfiles": [
+          {
+            "name": "syspool",
+            "osDiskSizeGB": "[parameters('osDiskSizeGB')]",
+            "count": "[parameters('agentCount')]",
+            "vmSize": "[parameters('agentVMSize')]",
+            "osType": "[parameters('osTypeLinux')]",
+            "type": "VirtualMachineScaleSets",
+            "mode": "System"
+          }
+        ]
+      }
+    },
+    {
+      "condition": "[parameters('enableMaintenanceConfigurations')]",
+      "type": "Microsoft.ContainerService/managedClusters/maintenanceConfigurations",
+      "apiVersion": "2024-06-02-preview",
+      "name": "[format('{0}/{1}', format('aks-{0}', variables('uniqueSuffix')), 'aksManagedAutoUpgradeSchedule')]",
+      "properties": {
+        "maintenanceWindow": {
+          "durationHours": 6,
+          "schedule": {
+            "weekly": {
+              "dayOfWeek": "Thursday",
+              "intervalWeeks": 2
+            }
+          },
+          "startTime": "00:00",
+          "utcOffset": "+10:00"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ContainerService/managedClusters', format('aks-{0}', variables('uniqueSuffix')))]"
+      ]
+    },
+    {
+      "condition": "[parameters('enableMaintenanceConfigurations')]",
+      "type": "Microsoft.ContainerService/managedClusters/maintenanceConfigurations",
+      "apiVersion": "2024-06-02-preview",
+      "name": "[format('{0}/{1}', format('aks-{0}', variables('uniqueSuffix')), 'aksManagedNodeOSUpgradeSchedule')]",
+      "properties": {
+        "maintenanceWindow": {
+          "durationHours": 6,
+          "schedule": {
+            "weekly": {
+              "dayOfWeek": "Tuesday",
+              "intervalWeeks": 1
+            }
+          },
+          "startTime": "00:00",
+          "utcOffset": "+10:00"
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ContainerService/managedClusters', format('aks-{0}', variables('uniqueSuffix')))]"
+      ]
+    }
+  ]
+}
