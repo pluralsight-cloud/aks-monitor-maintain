@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "15891201068604737206"
+      "templateHash": "4884162893666820046"
     },
     "name": "Demo: Automatically Upgrade AKS",
     "description": "Deploy this template to follow-along with the demonstration."
@@ -58,7 +58,7 @@
         ],
         "forceUpdateTag": "1",
         "azPowerShellVersion": "10.1",
-        "scriptContent": "    $SecurePassword = ConvertTo-SecureString \"${env:CLIENT_SECRET}\" -AsPlainText -Force\n    $TenantId = \"${env:TENANT_ID}\"\n    $ApplicationId = \"${env:APP_ID}\"\n    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ApplicationId, $SecurePassword\n    Connect-AzAccount -ServicePrincipal -TenantId $TenantId -Credential $Credential\n    $ResourceGroup = Get-AzResourceGroup\n    $ResourceGroupName = $ResourceGroup.ResourceGroupName\n    $Location = $ResourceGroup.Location\n    $Version = Get-AzAksVersion -Location $Location | Sort-Object OrchestratorVersion | Select-Object -ExpandProperty OrchestratorVersion -First 1\n    Invoke-WebRequest -Uri \"https://raw.githubusercontent.com/WayneHoggett-ACG/aks-maintain-draft/refs/heads/main/1.2/aks.json\" -OutFile \"aks.json\"\n    New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroupName -TemplateFile 'aks.json' -kubernetesVersion $Version\n    ",
+        "scriptContent": "    $SecurePassword = ConvertTo-SecureString \"${env:CLIENT_SECRET}\" -AsPlainText -Force\n    $TenantId = \"${env:TENANT_ID}\"\n    $ApplicationId = \"${env:APP_ID}\"\n    $Credential = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ApplicationId, $SecurePassword\n    Connect-AzAccount -ServicePrincipal -TenantId $TenantId -Credential $Credential\n    $ResourceGroup = Get-AzResourceGroup\n    $ResourceGroupName = $ResourceGroup.ResourceGroupName\n    $Location = $ResourceGroup.Location\n    $Version = Get-AzAksVersion -Location $Location | Sort-Object OrchestratorVersion | Select-Object -ExpandProperty OrchestratorVersion -First 1\n    Invoke-WebRequest -Uri \"https://raw.githubusercontent.com/pluralsight-cloud/aks-monitor-maintain/refs/heads/main/1.2/aks.json\" -OutFile \"aks.json\"\n    New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroupName -TemplateFile 'aks.json' -kubernetesVersion $Version\n    ",
         "supportingScriptUris": [],
         "timeout": "PT30M",
         "cleanupPreference": "OnSuccess",
