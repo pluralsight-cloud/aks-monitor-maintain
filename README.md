@@ -29,6 +29,8 @@ Created with ❤️ by [Wayne Hoggett](https://github.com/WayneHoggett-ACG/)
 - [Azure Kubernetes Service patch and upgrade guidance](https://learn.microsoft.com/azure/architecture/operator-guides/aks/aks-upgrade-practices)
 - [Upgrading Azure Kubernetes Service clusters and node pools](https://learn.microsoft.com/azure/aks/upgrade)
 - [Supported Kubernetes versions in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/azure/aks/supported-kubernetes-versions)
+- [Specifying a Disruption Budget for your Application](https://kubernetes.io/docs/tasks/run-application/configure-pdb/)
+- [Pod Disruptions](https://kubernetes.io/docs/concepts/workloads/pods/disruptions/ )
 
 ### Clip 2 - Demo: Automatically Upgrade Azure Kubernetes Service (AKS)
 
