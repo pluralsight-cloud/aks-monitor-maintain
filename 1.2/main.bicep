@@ -43,7 +43,7 @@ resource CreateAKSCluster 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     $ResourceGroupName = $ResourceGroup.ResourceGroupName
     $Location = $ResourceGroup.Location
     $Version = Get-AzAksVersion -Location $Location | Sort-Object OrchestratorVersion | Select-Object -ExpandProperty OrchestratorVersion -First 1
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/WayneHoggett-ACG/aks-maintain-draft/refs/heads/main/1.2/aks.json" -OutFile "aks.json"
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/pluralsight-cloud/aks-monitor-maintain/refs/heads/main/1.2/aks.json" -OutFile "aks.json"
     New-AzResourceGroupDeployment -ResourceGroupName $ResourceGroupName -TemplateFile 'aks.json' -kubernetesVersion $Version
     '''
     supportingScriptUris: []
