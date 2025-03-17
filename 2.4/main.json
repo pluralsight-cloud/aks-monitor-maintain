@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "3053883276512847747"
+      "templateHash": "10584615498404319396"
     }
   },
   "variables": {
@@ -98,7 +98,7 @@
       "kind": "AzureCLI",
       "properties": {
         "forceUpdateTag": "1",
-        "azCliVersion": "2.70.0",
+        "azCliVersion": "2.9.1",
         "environmentVariables": [
           {
             "name": "RG",

@@ -83,7 +83,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   kind: 'AzureCLI'
   properties: {
     forceUpdateTag: '1'
-    azCliVersion:  '2.70.0'
+    azCliVersion:  '2.9.1'
     environmentVariables: [
       {
         name: 'RG'
