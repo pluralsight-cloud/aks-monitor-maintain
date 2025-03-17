@@ -105,8 +105,10 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
     > **Note**: You can change the name of the resource group and location as required. But you must use a region where App Gateway for Containers is available.
 
     ```bash
-    RG=$(az group create --location australiaeast --resource-group rg-appgw-for-containers --query name --output tsv)
+    RG=$(az group create --location <location> --resource-group <resource group name> --query name --output tsv)
     ```
+
+1. Click the **Deploy to Azure** button. Make sure the link opens in the same browser tab as the Azure Portal.
 
     [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fpluralsight-cloud%2Faks-monitor-maintain%2Frefs%2Fheads%2Fmain%2F2.4%2Fmain.json)
 
