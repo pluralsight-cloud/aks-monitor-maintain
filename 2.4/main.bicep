@@ -83,13 +83,18 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   kind: 'AzureCLI'
   properties: {
     forceUpdateTag: '1'
-    azCliVersion:  '2.9.1'
+    azCliVersion:  '2.70.0'
+    environmentVariables: [
+      {
+        name: 'RG'
+        value: resourceGroup().name
+      }
+    ]
     scriptContent: '''
     # Install kubectl
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
     mv kubectl /usr/local/bin/
-    RG=$(az group list --query [].name --output tsv)
     AKS=$(az aks list --resource-group $RG --query [].name --output tsv)
     ACR=$(az acr list --resource-group $RG --query [].name --output tsv)
     ACR_LOGIN_SERVER=$(az acr show --name $ACR --query loginServer --output tsv)
@@ -107,7 +112,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     kubectl create deployment web --image=$ACR_LOGIN_SERVER/web:v1 --namespace globalmanticsbooks --replicas=1 --port=80
     kubectl create deployment api --image=$ACR_LOGIN_SERVER/api:v1 --namespace globalmanticsbooks --replicas=1 --port=5000
     LAW_ID=$(az monitor log-analytics workspace list --resource-group $RG --output tsv --query [].id)
-    az aks enable-addons --addon monitoring --name $AKS --resource-group $RG --workspace-resource-id $LAW_ID --enable-msi-auth-for-monitoring=false
+    az aks enable-addons --addon monitoring --name $AKS --resource-group $RG --workspace-resource-id $LAW_ID
     '''
     supportingScriptUris: []
     timeout: 'PT30M'

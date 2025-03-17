@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "11549648350071947632"
+      "templateHash": "3053883276512847747"
     }
   },
   "variables": {
@@ -98,8 +98,14 @@
       "kind": "AzureCLI",
       "properties": {
         "forceUpdateTag": "1",
-        "azCliVersion": "2.9.1",
-        "scriptContent": "    # Install kubectl\n    curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"\n    chmod +x kubectl\n    mv kubectl /usr/local/bin/\n    RG=$(az group list --query [].name --output tsv)\n    AKS=$(az aks list --resource-group $RG --query [].name --output tsv)\n    ACR=$(az acr list --resource-group $RG --query [].name --output tsv)\n    ACR_LOGIN_SERVER=$(az acr show --name $ACR --query loginServer --output tsv)\n    # Build the Container Images\n    git clone https://github.com/WayneHoggett-ACG/GlobalmanticsBooks\n    cd GlobalmanticsBooks\n    cd api\n    az acr build --registry $ACR --image api:v1 .\n    cd ../web\n    az acr build --registry $ACR --image web:v1 .\n    # Connect to the AKS cluster\n    az aks get-credentials --resource-group $RG --name $AKS\n    # Create the Namespace and Application\n    kubectl create namespace globalmanticsbooks --save-config\n    kubectl create deployment web --image=$ACR_LOGIN_SERVER/web:v1 --namespace globalmanticsbooks --replicas=1 --port=80\n    kubectl create deployment api --image=$ACR_LOGIN_SERVER/api:v1 --namespace globalmanticsbooks --replicas=1 --port=5000\n    LAW_ID=$(az monitor log-analytics workspace list --resource-group $RG --output tsv --query [].id)\n    az aks enable-addons --addon monitoring --name $AKS --resource-group $RG --workspace-resource-id $LAW_ID --enable-msi-auth-for-monitoring=false\n    ",
+        "azCliVersion": "2.70.0",
+        "environmentVariables": [
+          {
+            "name": "RG",
+            "value": "[resourceGroup().name]"
+          }
+        ],
+        "scriptContent": "    # Install kubectl\n    curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"\n    chmod +x kubectl\n    mv kubectl /usr/local/bin/\n    AKS=$(az aks list --resource-group $RG --query [].name --output tsv)\n    ACR=$(az acr list --resource-group $RG --query [].name --output tsv)\n    ACR_LOGIN_SERVER=$(az acr show --name $ACR --query loginServer --output tsv)\n    # Build the Container Images\n    git clone https://github.com/WayneHoggett-ACG/GlobalmanticsBooks\n    cd GlobalmanticsBooks\n    cd api\n    az acr build --registry $ACR --image api:v1 .\n    cd ../web\n    az acr build --registry $ACR --image web:v1 .\n    # Connect to the AKS cluster\n    az aks get-credentials --resource-group $RG --name $AKS\n    # Create the Namespace and Application\n    kubectl create namespace globalmanticsbooks --save-config\n    kubectl create deployment web --image=$ACR_LOGIN_SERVER/web:v1 --namespace globalmanticsbooks --replicas=1 --port=80\n    kubectl create deployment api --image=$ACR_LOGIN_SERVER/api:v1 --namespace globalmanticsbooks --replicas=1 --port=5000\n    LAW_ID=$(az monitor log-analytics workspace list --resource-group $RG --output tsv --query [].id)\n    az aks enable-addons --addon monitoring --name $AKS --resource-group $RG --workspace-resource-id $LAW_ID\n    ",
         "supportingScriptUris": [],
         "timeout": "PT30M",
         "cleanupPreference": "OnSuccess",
