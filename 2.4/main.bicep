@@ -89,7 +89,6 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
     mv kubectl /usr/local/bin/
-    az login --service-principal --username $APP_ID --password $CLIENT_SECRET --tenant $TENANT_ID
     RG=$(az group list --query [].name --output tsv)
     AKS=$(az aks list --resource-group $RG --query [].name --output tsv)
     ACR=$(az acr list --resource-group $RG --query [].name --output tsv)
