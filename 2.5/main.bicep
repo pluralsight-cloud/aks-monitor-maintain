@@ -78,16 +78,8 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     azCliVersion: '2.9.1'
     environmentVariables: [
       {
-        name: 'APP_ID'
-        value: applicationClientId
-      }
-      {
-        name: 'CLIENT_SECRET'
-        value: applicationClientSecret
-      }
-      {
-        name: 'TENANT_ID'
-        value: tenantId
+        name: 'RG'
+        value: resourceGroup().name
       }
     ]
     scriptContent: '''
@@ -95,8 +87,6 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
     mv kubectl /usr/local/bin/
-    az login --service-principal --username $APP_ID --password $CLIENT_SECRET --tenant $TENANT_ID
-    RG=$(az group list --query [].name --output tsv)
     AKS=$(az aks list --resource-group $RG --query [].name --output tsv)
     ACR=$(az acr list --resource-group $RG --query [].name --output tsv)
     ACR_LOGIN_SERVER=$(az acr show --name $ACR --query loginServer --output tsv)
@@ -116,7 +106,9 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     # Monitoring Configuration (No Grafana)
     LAW_ID=$(az monitor log-analytics workspace list --resource-group $RG --output tsv --query [].id)
     AMW_ID=$(az monitor account list --name 'amw-default' --resource-group $RG --output tsv --query id)
+    until [ "$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)" == "Succeeded" ]; do sleep 10; done
     az aks enable-addons --addon monitoring --name $AKS --resource-group $RG --workspace-resource-id $LAW_ID
+    until [ "$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)" == "Succeeded" ]; do sleep 10; done
     az aks update --enable-azure-monitor-metrics --name $AKS --resource-group $RG --azure-monitor-workspace-resource-id $AMW_ID
     '''
     supportingScriptUris: []
