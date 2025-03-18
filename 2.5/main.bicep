@@ -24,7 +24,7 @@ resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10
   }
 }
 
-resource azureMonitorWorkspace 'Microsoft.Monitor/accounts@2023-10-01-preview' = {
+resource azureMonitorWorkspace 'Microsoft.Monitor/accounts@2023-04-03' = {
   name: 'amw-default'
   location: location
 }
@@ -115,7 +115,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     kubectl create namespace globalmanticsbooks --save-config
     kubectl create deployment web --image=$ACR_LOGIN_SERVER/web:v1 --namespace globalmanticsbooks --replicas=1 --port=80
     kubectl create deployment api --image=$ACR_LOGIN_SERVER/api:v1 --namespace globalmanticsbooks --replicas=1 --port=5000
-    # Monitoring Configuration (No Grafana)
+    # Monitoring Configuration
     LAW_ID=$(az monitor log-analytics workspace list --resource-group $RG --output tsv --query [].id)
     AMW_ID=$(az monitor account list --name 'amw-default' --resource-group $RG --output tsv --query id)
     until [ "$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)" == "Succeeded" ]; do sleep 10; done
