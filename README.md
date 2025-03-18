@@ -102,7 +102,7 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 
 1. Create a resource group for the demonstration.
 
-    > **Note**: You can change the name of the resource group and location as required. But you must use a region where App Gateway for Containers is available.
+    > **Note**: You can change the name of the resource group and location as required.
 
     ```bash
     RG=$(az group create --location <location> --resource-group <resource group name> --query name --output tsv)
@@ -130,7 +130,7 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 
 1. Create a resource group for the demonstration.
 
-    > **Note**: You can change the name of the resource group and location as required. But you must use a region where App Gateway for Containers is available.
+    > **Note**: You can change the name of the resource group and location as required.
 
     ```bash
     RG=$(az group create --location <location> --resource-group <resource group name> --query name --output tsv)

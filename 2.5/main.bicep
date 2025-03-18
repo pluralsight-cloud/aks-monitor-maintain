@@ -117,7 +117,7 @@ resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     kubectl create deployment api --image=$ACR_LOGIN_SERVER/api:v1 --namespace globalmanticsbooks --replicas=1 --port=5000
     # Monitoring Configuration
     LAW_ID=$(az monitor log-analytics workspace list --resource-group $RG --output tsv --query [].id)
-    AMW_ID=$(az monitor account list --name 'amw-default' --resource-group $RG --output tsv --query id)
+    AMW_ID=$(az monitor account list --resource-group $RG --output tsv --query [].id)
     until [ "$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)" == "Succeeded" ]; do sleep 10; done
     az aks enable-addons --addon monitoring --name $AKS --resource-group $RG --workspace-resource-id $LAW_ID
     until [ "$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)" == "Succeeded" ]; do sleep 10; done
