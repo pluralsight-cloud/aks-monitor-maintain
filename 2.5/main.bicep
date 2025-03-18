@@ -1,17 +1,18 @@
-@description('The tenant ID for the Service Principal (Application), use the default value for the Sandbox')
-param tenantId string = '84f1e4ea-8554-43e1-8709-f0b8589ea118'
-@description('The Client ID for the Service Principal (Application). Retrieve this value from the details of your Sandbox instance.')
-param applicationClientId string
-@secure()
-@description('The Client Secret for the Service Principal (Application). Retrieve this value from the details of your Sandbox instance.')
-param applicationClientSecret string
-
 var location = resourceGroup().location
 var osDiskSizeGB = 128
 var agentCount = 1
 var agentVMSize = 'Standard_D2s_v3'
 var osTypeLinux = 'Linux'
 var uniqueSuffix = uniqueString(resourceGroup().id)
+
+var roleDefinitionId = {
+  AcrPull: {
+    id: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d')
+  }
+  Contributor: {
+    id: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')
+  }
+}
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2020-10-01' = {
   name: 'law-default'
@@ -65,9 +66,20 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2024-09-01' = {
   }
 }
 
+resource deploymentScriptIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+  name: 'DeploymentScriptIdentity'
+  location: location
+}
+
 resource deploymentScript 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'ds-deploymentscript'
   location: location
+  identity: {
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${deploymentScriptIdentity.id}': {}
+    }
+  }
   dependsOn: [
     containerRegistry
     aksCluster
