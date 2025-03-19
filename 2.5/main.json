@@ -5,13 +5,13 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "9988688154420777710"
+      "templateHash": "8183474645699989222"
     }
   },
   "variables": {
     "location": "[resourceGroup().location]",
     "osDiskSizeGB": 128,
-    "agentCount": 1,
+    "agentCount": 2,
     "agentVMSize": "Standard_D2s_v3",
     "osTypeLinux": "Linux",
     "uniqueSuffix": "[uniqueString(resourceGroup().id)]",
@@ -21,6 +21,9 @@
       },
       "Contributor": {
         "id": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]"
+      },
+      "Owner": {
+        "id": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '8e3af657-a8ff-443c-a75c-2fe8c4bcb635')]"
       }
     }
   },
@@ -88,8 +91,22 @@
       "location": "[variables('location')]"
     },
     {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2020-04-01-preview",
+      "name": "[guid(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'DeploymentScriptIdentity'), resourceGroup().id, 'Owner')]",
+      "properties": {
+        "description": "Managed identity role assignment",
+        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'DeploymentScriptIdentity'), '2018-11-30').principalId]",
+        "roleDefinitionId": "[variables('roleDefinitionId').Owner.id]",
+        "principalType": "ServicePrincipal"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'DeploymentScriptIdentity')]"
+      ]
+    },
+    {
       "type": "Microsoft.Resources/deploymentScripts",
-      "apiVersion": "2020-10-01",
+      "apiVersion": "2023-08-01",
       "name": "ds-deploymentscript",
       "location": "[variables('location')]",
       "identity": {
@@ -101,14 +118,34 @@
       "kind": "AzureCLI",
       "properties": {
         "forceUpdateTag": "1",
-        "azCliVersion": "2.9.1",
+        "azCliVersion": "2.69.0",
         "environmentVariables": [
           {
             "name": "RG",
             "value": "[resourceGroup().name]"
+          },
+          {
+            "name": "AMW_ID",
+            "value": "[resourceId('Microsoft.Monitor/accounts', 'amw-default')]"
+          },
+          {
+            "name": "LAW_ID",
+            "value": "[resourceId('Microsoft.OperationalInsights/workspaces', 'law-default')]"
+          },
+          {
+            "name": "AKS",
+            "value": "[format('aks-{0}', variables('uniqueSuffix'))]"
+          },
+          {
+            "name": "ACR",
+            "value": "[format('cr{0}', variables('uniqueSuffix'))]"
+          },
+          {
+            "name": "ACR_LOGIN_SERVER",
+            "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries', format('cr{0}', variables('uniqueSuffix'))), '2023-11-01-preview').loginServer]"
           }
         ],
-        "scriptContent": "    # Install kubectl\n    curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"\n    chmod +x kubectl\n    mv kubectl /usr/local/bin/\n    AKS=$(az aks list --resource-group $RG --query [].name --output tsv)\n    ACR=$(az acr list --resource-group $RG --query [].name --output tsv)\n    ACR_LOGIN_SERVER=$(az acr show --name $ACR --query loginServer --output tsv)\n    # Build the Container Images\n    git clone https://github.com/WayneHoggett-ACG/GlobalmanticsBooks\n    cd GlobalmanticsBooks\n    cd api\n    az acr build --registry $ACR --image api:v1 .\n    cd ../web\n    az acr build --registry $ACR --image web:v1 .\n    # Connect to the AKS cluster\n    az aks get-credentials --resource-group $RG --name $AKS\n    # Create the Namespace and Application\n    kubectl create namespace globalmanticsbooks --save-config\n    kubectl create deployment web --image=$ACR_LOGIN_SERVER/web:v1 --namespace globalmanticsbooks --replicas=1 --port=80\n    kubectl create deployment api --image=$ACR_LOGIN_SERVER/api:v1 --namespace globalmanticsbooks --replicas=1 --port=5000\n    # Monitoring Configuration\n    LAW_ID=$(az monitor log-analytics workspace list --resource-group $RG --output tsv --query [].id)\n    AMW_ID=$(az monitor account list --resource-group $RG --output tsv --query [].id)\n    until [ \"$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)\" == \"Succeeded\" ]; do sleep 10; done\n    az aks enable-addons --addon monitoring --name $AKS --resource-group $RG --workspace-resource-id $LAW_ID\n    until [ \"$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)\" == \"Succeeded\" ]; do sleep 10; done\n    az aks update --enable-azure-monitor-metrics --name $AKS --resource-group $RG --azure-monitor-workspace-resource-id $AMW_ID\n    ",
+        "scriptContent": "    echo \"Install kubectl\"\n    curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"\n    chmod +x kubectl\n    mv kubectl /usr/local/bin/\n    echo \"Get variables\"\n    echo \"Clone the repository\"\n    git clone https://github.com/WayneHoggett-ACG/GlobalmanticsBooks\n    cd GlobalmanticsBooks\n    echo \"Build the Container Images\"\n    cd api\n    az acr build --registry $ACR --image api:v1 .\n    cd ../web\n    az acr build --registry $ACR --image web:v1 .\n    echo \"Connect to the AKS cluster\"\n    az aks get-credentials --resource-group $RG --name $AKS\n    echo \"Create the Namespace and Application\"\n    kubectl create namespace globalmanticsbooks --save-config\n    kubectl create deployment web --image=$ACR_LOGIN_SERVER/web:v1 --namespace globalmanticsbooks --replicas=1 --port=80\n    kubectl create deployment api --image=$ACR_LOGIN_SERVER/api:v1 --namespace globalmanticsbooks --replicas=1 --port=5000\n    echo \"Monitoring Configuration\"\n    echo \"Waiting for cluster to be ready...\"\n    until [ \"$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)\" == \"Succeeded\" ]; do sleep 10; done\n    echo \"Configuring container insights\"\n    az aks enable-addons --addon monitoring --name $AKS --resource-group $RG --workspace-resource-id $LAW_ID\n    echo \"Waiting for cluster to be ready...\"\n    until [ \"$(az aks show -g $RG -n $AKS --query provisioningState -o tsv)\" == \"Succeeded\" ]; do sleep 10; done\n    echo \"Configuring prometheus\"\n    az aks update --enable-azure-monitor-metrics --name $AKS --resource-group $RG --azure-monitor-workspace-resource-id $AMW_ID\n    ",
         "supportingScriptUris": [],
         "timeout": "PT30M",
         "cleanupPreference": "OnSuccess",
@@ -116,8 +153,10 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.ContainerService/managedClusters', format('aks-{0}', variables('uniqueSuffix')))]",
+        "[resourceId('Microsoft.Monitor/accounts', 'amw-default')]",
         "[resourceId('Microsoft.ContainerRegistry/registries', format('cr{0}', variables('uniqueSuffix')))]",
-        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'DeploymentScriptIdentity')]"
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'DeploymentScriptIdentity')]",
+        "[resourceId('Microsoft.OperationalInsights/workspaces', 'law-default')]"
       ]
     }
   ]
