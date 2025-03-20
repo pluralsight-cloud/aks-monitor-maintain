@@ -88,6 +88,11 @@ To follow along in this demo using the Cloud Playground Sandbox, follow these st
 1. Deploy the template.
 1. Follow-along with the demo.
 
+#### Additional Learning
+
+- [Configure log collection in Container insights](https://learn.microsoft.com/azure/azure-monitor/containers/container-insights-data-collection-configure?tabs=portal)
+- [Filter log collection in Container insights](https://learn.microsoft.com/azure/azure-monitor/containers/container-insights-data-collection-filter)
+
 ### Clip 4 - Demo: Configure Prometheus Monitoring
 
 1. To follow along with this demonstration you will need your own subscription.
